@@ -1,18 +1,7 @@
 name: NodeJS-CI
 
-# on: [push, workflow_dispatch]
-# # VALIDATE_JAVASCRIPT_STANDARD: true
-on: 
-  workflow_dispatch:
-    inputs:
-      executescope:
-        description: 'Execute Terraform Scope, regional|global'
-        required: true
-        default: 'regional'
-      executetype:
-        description: 'Execute Terraform Type, plan|apply'
-        required: true
-        default: 'plan'
+on: [push, workflow_dispatch]
+# VALIDATE_JAVASCRIPT_STANDARD: true
 
 jobs:
   ci-job:
@@ -20,9 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - run: |
-        echo "${{ github.event.inputs.executescope }}"
-        echo "${{ github.event.inputs.executetype }}"
 
     - uses: actions/checkout@v2
     
