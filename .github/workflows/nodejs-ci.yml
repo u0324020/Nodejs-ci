@@ -24,54 +24,55 @@ jobs:
         echo "${{ github.event.inputs.executescope }}"
         echo "${{ github.event.inputs.executetype }}"
 
-    # - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
     
-    # - name: Use Node.js 12.22
-    #   uses: actions/setup-node@v2
-    #   with:
-    #     node-version: 12.22
+    - name: Use Node.js 12.22
+      uses: actions/setup-node@v2
+      with:
+        node-version: 12.22
+
+    - name: npm install
+      run: npm install
         
-    # - name: Install dependencies
-    #   run: |
-    #     python -m pip install --upgrade pip
-    #     python -m pip install flake8 pytest
-    #     if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        
-    # - name: Test with pytest
-    #   run: pytest test_sumtwo.py -v --junitxml="result.xml"
+    - name: Test with chai
+      run: mocha test --reporter mocha-junit-reporter
 
-    # - name: Publish unit test results
-    #   uses: EnricoMi/publish-unit-test-result-action@v1
-    #   if: always()
-    #   with:
-    #     files: '*.xml'
-    #     report_individual_runs: "true"
+    - name: Publish unit test results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
+      with:
+        files: '*.xml'
+        report_individual_runs: "true"
 
-    # - name: Initialize CodeQL
-    #   uses: github/codeql-action/init@v1
-    #   with:
-    #     languages: python
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: javascript
 
-    # - name: Build package
-    #   run: python -m main
+    - name: Build package
+      run: |
+        express myExpressApp --view pug
+        cd myExpressApp
 
-    # - name: Perform CodeQL Analysis
-    #   uses: github/codeql-action/analyze@v1
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+
+    - run: cd ..
     
-    # - name: Upload a Build Artifact
-    #   uses: actions/upload-artifact@v2.2.4
-    #   with:
-    #     name: artifact
-    #     path: .
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        name: artifact
+        path: .
 
-    # - name: Docker Hub login
-    #   uses: azure/docker-login@v1
-    #   with:
-    #     username: ${{ secrets.DOCKER_USERNAME }}
-    #     password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Docker Hub login
+      uses: azure/docker-login@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
-    # - name: Build Docker Image
-    #   run: docker build . -t ${{ secrets.DOCKER_USERNAME }}/janedockerrepo:${{ github.sha }}
+    - name: Build Docker Image
+      run: docker build . -t ${{ secrets.DOCKER_USERNAME }}/janedockerrepo:${{ github.sha }}
 
-    # - name: Push Docker Image to Registry
-    #   run: docker push ${{ secrets.DOCKER_USERNAME }}/janedockerrepo:${{ github.sha }}
+    - name: Push Docker Image to Registry
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/janedockerrepo:${{ github.sha }}
