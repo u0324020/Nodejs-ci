@@ -1,7 +1,6 @@
 name: NodeJS-CI
 
 on: [push, workflow_dispatch]
-# VALIDATE_JAVASCRIPT_STANDARD: true
 
 jobs:
   ci-job:
@@ -16,6 +15,17 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: 12.22
+
+    # combination of various linters
+    # help validate your source code
+    - name: Super-Linter
+      uses: github/super-linter@v4
+      env:
+        VALIDATE_ALL_CODEBASE: false # scan change parts
+        DEFAULT_BRANCH: main
+        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+        VALIDATE_JAVASCRIPT_STANDARD: true #js
+        VALIDATE_DOCKERFILE: true
 
     - name: npm install package
       run: |
