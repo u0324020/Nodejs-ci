@@ -22,6 +22,7 @@ jobs:
         npm install
         npm install -g mocha
         npm install -g mocha-junit-reporter
+        npm install -g express-generator
         
     - name: Test with chai
       run: mocha test --reporter mocha-junit-reporter
