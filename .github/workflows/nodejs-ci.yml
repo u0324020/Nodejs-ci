@@ -22,7 +22,7 @@ jobs:
 
     - run: npm install -g mocha
 
-    - run: npm install mocha-junit-reporter --save-dev
+    - run: npm install -g mocha-junit-reporter
         
     - name: Test with chai
       run: mocha test --reporter mocha-junit-reporter
