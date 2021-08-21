@@ -17,12 +17,11 @@ jobs:
       with:
         node-version: 12.22
 
-    - name: npm install
-      run: npm install
-
-    - run: npm install -g mocha
-
-    - run: npm install -g mocha-junit-reporter
+    - name: npm install package
+      run: |
+        npm install
+        npm install -g mocha
+        npm install -g mocha-junit-reporter
         
     - name: Test with chai
       run: mocha test --reporter mocha-junit-reporter
