@@ -27,7 +27,7 @@ jobs:
       env:
         VALIDATE_ALL_CODEBASE: false # scan change parts
         DEFAULT_BRANCH: main
-        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+#         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         VALIDATE_JAVASCRIPT_STANDARD: true #js
         VALIDATE_DOCKERFILE: true
 
